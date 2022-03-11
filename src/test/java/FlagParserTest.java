@@ -1,9 +1,6 @@
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
-import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,4 +22,48 @@ class FlagParserTest {
                 () -> assertEquals(4, flag.getNumber())
         );
     }
+
+    @Test
+    void dirFlagAndNumberShouldBeParsed() {
+        Flag flag = flagParser.parse(new String[]{"-d", "-10"});
+        assertAll(
+                () -> assertEquals(FileType.Directory, flag.getFileType()),
+                () -> assertEquals(10, flag.getNumber())
+        );
+    }
+
+    @Test
+    void dirAndNumberBadFlagShouldNotBeParsed() {
+        Flag flag = flagParser.parse(new String[]{"--d", "-10he"});
+        assertAll(
+                () -> assertNull(flag.getFileType()),
+                () -> assertEquals(0, flag.getNumber())
+        );
+    }
+
+    @Test
+    void linuxStylePathShouldBeParsed() {
+        Flag flag = flagParser.parse(new String[]{"/usr/share"});
+        assertAll(
+                () -> assertEquals("/usr/share", flag.getPath())
+        );
+    }
+
+    @Test
+    void windowsStylePathShouldBeParsed() {
+        Flag flag = flagParser.parse(new String[]{"\\user\\java"});
+        assertAll(
+                () -> assertEquals("\\user\\java", flag.getPath())
+        );
+    }
+
+    @Test
+    void badPathShouldNotBeParsed() {
+        Flag flag = flagParser.parse(new String[]{"Bad_Path"});
+        assertAll(
+                () -> assertNull(flag.getPath())
+        );
+    }
+
+
 }
