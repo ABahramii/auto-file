@@ -7,6 +7,7 @@ public class FlagParser {
     private final static Pattern dirFlagPattern = Pattern.compile("^-d$");
     private final static Pattern numberFlagPattern = Pattern.compile("^-\\d+$");
     private final static Pattern pathFlagPattern = Pattern.compile(".+[/\\\\]");
+    private final static Pattern nameFlagPattern = Pattern.compile("^-n$");
 
     public Flag parse(String[] inputArgs) throws Exception {
         Map<FlagEnum, Pattern> flagEnumPatternMap = new HashMap<>() {{
@@ -14,6 +15,7 @@ public class FlagParser {
             put(FlagEnum.Dir, dirFlagPattern);
             put(FlagEnum.Number, numberFlagPattern);
             put(FlagEnum.Path, pathFlagPattern);
+            put(FlagEnum.Name, nameFlagPattern);
         }};
 
         Flag flag = new Flag();
@@ -33,6 +35,8 @@ public class FlagParser {
                         flag.setNumber(Integer.parseInt(input.split("-")[1]));
                     } else if (flagEnum.equals(FlagEnum.Path)) {
                         flag.setPath(input);
+                    } else if (flagEnum.equals(FlagEnum.Name)) {
+                        flag.setNamable(true);
                     }
 
                     flagEnumPatternMap.remove(flagEnum);

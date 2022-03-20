@@ -2,5 +2,6 @@ public enum FlagEnum {
     File,
     Dir,
     Number,
-    Path;
+    Path,
+    Name;
 }

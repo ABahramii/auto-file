@@ -2,7 +2,7 @@ public class Flag {
     private FileType fileType;
     private int number;
     private String path;
-    private boolean hasName;
+    private boolean namable;
 
     public FileType getFileType() {
         return fileType;
@@ -28,11 +28,11 @@ public class Flag {
         this.path = path;
     }
 
-    public boolean isHasName() {
-        return hasName;
+    public boolean isNamable() {
+        return namable;
     }
 
-    public void setHasName(boolean hasName) {
-        this.hasName = hasName;
+    public void setNamable(boolean namable) {
+        this.namable = namable;
     }
 }

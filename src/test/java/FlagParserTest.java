@@ -59,5 +59,10 @@ class FlagParserTest {
         );
     }
 
+    @Test
+    void hasNameFlagShouldBeParsed() throws Exception {
+        Flag flag = flagParser.parse(new String[]{"-f", "-5", "-n"});
+        assertTrue(flag.isNamable());
+    }
 
 }
