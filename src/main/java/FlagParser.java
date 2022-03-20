@@ -49,6 +49,16 @@ public class FlagParser {
             }
         }
 
+        validateFlag(flag);
         return flag;
+    }
+
+    private void validateFlag(Flag flag) throws Exception {
+        if (flag.getFileType() == null) {
+            throw new Exception("missing operand file type: -f or -d");
+        }
+        if (flag.getNumber() == 0) {
+            throw new Exception("missing operand number of files: -<number>");
+        }
     }
 }

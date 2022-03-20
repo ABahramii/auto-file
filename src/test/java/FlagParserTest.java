@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -63,10 +62,15 @@ class FlagParserTest {
     }
 
     @Test
-    @Disabled
     void missingFileTypeFlagShouldThrowsException() {
-        Exception exception = assertThrows(Exception.class, () -> flagParser.parse(new String[]{"-10", "-n", "/home/"}));
+        Exception exception = assertThrows(Exception.class, () -> flagParser.parse(new String[]{"-10", "-n", "/home/Documents"}));
         assertEquals("missing operand file type: -f or -d", exception.getMessage());
+    }
+
+    @Test
+    void missingFileNumberFlagShouldThrowsException() {
+        Exception exception = assertThrows(Exception.class, () -> flagParser.parse(new String[]{"-d", "-n", "C:\\Users"}));
+        assertEquals("missing operand number of files: -<number>", exception.getMessage());
     }
 
 }
