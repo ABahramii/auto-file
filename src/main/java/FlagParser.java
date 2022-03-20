@@ -6,7 +6,7 @@ public class FlagParser {
     private final static Pattern fileFlagPattern = Pattern.compile("^-f$");
     private final static Pattern dirFlagPattern = Pattern.compile("^-d$");
     private final static Pattern numberFlagPattern = Pattern.compile("^-\\d+$");
-    private final static Pattern pathFlagPattern = Pattern.compile(".+[/\\\\]");
+    private final static Pattern pathFlagPattern = Pattern.compile(".*[/\\\\]");
     private final static Pattern nameFlagPattern = Pattern.compile("^-n$");
 
     public Flag parse(String[] inputArgs) throws Exception {
@@ -28,9 +28,9 @@ public class FlagParser {
                     invalidArg = false;
 
                     if (flagEnum.equals(FlagEnum.File)) {
-                        flag.setFileType(FileType.File);
+                        flag.setFileType(FileTypeEnum.File);
                     } else if (flagEnum.equals(FlagEnum.Dir)) {
-                        flag.setFileType(FileType.Directory);
+                        flag.setFileType(FileTypeEnum.Directory);
                     } else if (flagEnum.equals(FlagEnum.Number)) {
                         flag.setNumber(Integer.parseInt(input.split("-")[1]));
                     } else if (flagEnum.equals(FlagEnum.Path)) {

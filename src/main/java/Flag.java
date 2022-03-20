@@ -1,15 +1,15 @@
 public class Flag {
-    private FileType fileType;
+    private FileTypeEnum fileType;
     private int number;
     private String path;
     private boolean namable;
 
-    public FileType getFileType() {
+    public FileTypeEnum getFileType() {
         return fileType;
     }
 
-    public void setFileType(FileType fileType) {
-        this.fileType = fileType;
+    public void setFileType(FileTypeEnum fileTypeEnum) {
+        this.fileType = fileTypeEnum;
     }
 
     public int getNumber() {
