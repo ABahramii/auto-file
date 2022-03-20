@@ -1,6 +1,4 @@
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -10,45 +8,43 @@ public class FlagParser {
     private final static Pattern numberFlagPattern = Pattern.compile("^-\\d+$");
     private final static Pattern pathFlagPattern = Pattern.compile(".+[/\\\\]");
 
-    public Flag parse(String[] args) {
-        Map<FlagEnum, Pattern> map = new HashMap<>() {{
+    public Flag parse(String[] inputArgs) throws Exception {
+        Map<FlagEnum, Pattern> flagEnumPatternMap = new HashMap<>() {{
             put(FlagEnum.File, fileFlagPattern);
             put(FlagEnum.Dir, dirFlagPattern);
             put(FlagEnum.Number, numberFlagPattern);
             put(FlagEnum.Path, pathFlagPattern);
         }};
 
+        Flag flag = new Flag();
 
+        for (String input : inputArgs) {
+            boolean invalidArg = true;
 
-        List<String> inputFlags = Arrays.asList(args);
+            for (FlagEnum flagEnum : flagEnumPatternMap.keySet()) {
+                if (flagEnumPatternMap.get(flagEnum).matcher(input).find()) {
+                    invalidArg = false;
 
-        Flag f = new Flag();
-
-        for (String input : inputFlags) {
-
-            for (FlagEnum flag : map.keySet()) {
-                if (map.get(flag).matcher(input).find()) {
-
-                    if (flag.equals(FlagEnum.File)) {
-                        f.setFileType(FileType.File);
-                    }
-                    else if (flag.equals(FlagEnum.Dir)) {
-                        f.setFileType(FileType.Directory);
-                    }
-                    else if (flag.equals(FlagEnum.Number)) {
-                        f.setNumber(Integer.parseInt(input.split("-")[1]));
-                    }
-                    else if (flag.equals(FlagEnum.Path)) {
-                        f.setPath(input);
+                    if (flagEnum.equals(FlagEnum.File)) {
+                        flag.setFileType(FileType.File);
+                    } else if (flagEnum.equals(FlagEnum.Dir)) {
+                        flag.setFileType(FileType.Directory);
+                    } else if (flagEnum.equals(FlagEnum.Number)) {
+                        flag.setNumber(Integer.parseInt(input.split("-")[1]));
+                    } else if (flagEnum.equals(FlagEnum.Path)) {
+                        flag.setPath(input);
                     }
 
-                    map.remove(flag);
+                    flagEnumPatternMap.remove(flagEnum);
                     break;
                 }
             }
 
+            if (invalidArg) {
+                throw new Exception(input + ": invalid argument");
+            }
         }
 
-        return f;
+        return flag;
     }
 }

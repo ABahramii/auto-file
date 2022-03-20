@@ -15,7 +15,7 @@ class FlagParserTest {
     }
 
     @Test
-    void fileFlagAndNumberShouldBeParsed() {
+    void fileFlagAndNumberShouldBeParsed() throws Exception {
         Flag flag = flagParser.parse(new String[]{"-f", "-4"});
         assertAll(
                 () -> assertEquals(FileType.File, flag.getFileType()),
@@ -24,7 +24,7 @@ class FlagParserTest {
     }
 
     @Test
-    void dirFlagAndNumberShouldBeParsed() {
+    void dirFlagAndNumberShouldBeParsed() throws Exception {
         Flag flag = flagParser.parse(new String[]{"-d", "-10"});
         assertAll(
                 () -> assertEquals(FileType.Directory, flag.getFileType()),
@@ -33,16 +33,18 @@ class FlagParserTest {
     }
 
     @Test
-    void dirAndNumberBadFlagShouldNotBeParsed() {
-        Flag flag = flagParser.parse(new String[]{"--d", "-10he"});
-        assertAll(
-                () -> assertNull(flag.getFileType()),
-                () -> assertEquals(0, flag.getNumber())
-        );
+    void dirAndNumberInvalidFlagShouldThrowsException() {
+        assertThrows(Exception.class, () -> flagParser.parse(new String[]{"--d", "-10he"}));
     }
 
     @Test
-    void linuxStylePathShouldBeParsed() {
+    void parseInvalidArgShouldThrowsExceptionWithMessage() {
+        Exception exception = assertThrows(Exception.class, () -> flagParser.parse(new String[]{"--d", "-10he"}));
+        assertEquals("--d" + ": invalid argument", exception.getMessage());
+    }
+
+    @Test
+    void linuxStylePathShouldBeParsed() throws Exception {
         Flag flag = flagParser.parse(new String[]{"/usr/share"});
         assertAll(
                 () -> assertEquals("/usr/share", flag.getPath())
@@ -50,18 +52,10 @@ class FlagParserTest {
     }
 
     @Test
-    void windowsStylePathShouldBeParsed() {
+    void windowsStylePathShouldBeParsed() throws Exception {
         Flag flag = flagParser.parse(new String[]{"\\user\\java"});
         assertAll(
                 () -> assertEquals("\\user\\java", flag.getPath())
-        );
-    }
-
-    @Test
-    void badPathShouldNotBeParsed() {
-        Flag flag = flagParser.parse(new String[]{"Bad_Path"});
-        assertAll(
-                () -> assertNull(flag.getPath())
         );
     }
 
