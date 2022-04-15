@@ -8,23 +8,25 @@ public class App {
     public void run(String[] args) throws Exception {
         Flag flag = new FlagParser().parse(args);
 
-        // Todo: write test
-        List<String> names = new ArrayList<>(flag.getNumber());
+        List<String> names;
         if (flag.isNamable()) {
-            String typeName = getTypeName(flag.getFileType());
-            Scanner sc = new Scanner(System.in);
-            for (int i = 1; i <= flag.getNumber(); i++) {
-                System.out.print(typeName + " " + i + ": ");
-                String name = sc.nextLine();
-                names.add(name);
-            }
+            names = getCustomNames(flag.getFileType(), flag.getNumber());
         } else {
-            names = IntStream.range(1, flag.getNumber() + 1)
-                    .mapToObj(String::valueOf)
-                    .collect(Collectors.toList());
+            names = generateDefaultNames(flag.getNumber());
         }
 
-        names.forEach(System.out::println);
+//        names.forEach(System.out::println);
+    }
+
+    public List<String> getCustomNames(FileTypeEnum fileType, int number) {
+        Scanner sc = new Scanner(System.in);
+        List<String> names = new ArrayList<>(number);
+        String typeName = getTypeName(fileType);
+        for (int i = 1; i <= number; i++) {
+            System.out.print(typeName + " " + i + ": ");
+            names.add(sc.nextLine());
+        }
+        return names;
     }
 
     private String getTypeName(FileTypeEnum fileType) {
@@ -33,5 +35,11 @@ public class App {
         }
         // FileTypeEnum.Directory
         return "dirname";
+    }
+
+    public List<String> generateDefaultNames(int number) {
+        return IntStream.range(1, number + 1)
+                .mapToObj(String::valueOf)
+                .collect(Collectors.toList());
     }
 }
