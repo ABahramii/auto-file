@@ -15,7 +15,6 @@ public class App {
             names = generateDefaultNames(flag.getNumber());
         }
 
-//        names.forEach(System.out::println);
     }
 
     public List<String> getCustomNames(FileTypeEnum fileType, int number) {
