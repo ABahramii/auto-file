@@ -20,30 +20,18 @@ public class App {
         FileCreator fileCreator = new FileCreator(flag.getFileType(), flag.getPath(), names);
         fileCreator.create();
 
-        if (flag.getFileType().equals(FileTypeEnum.File)) {
-            System.out.println("\nFiles created successfully.");
-        } else {
-            System.out.println("\nDirectories created successfully.");
-        }
+        System.out.println(flag.getFileType().getCreateMessage());
     }
 
     public List<String> getCustomNames(FileTypeEnum fileType, int number) {
         Scanner sc = new Scanner(System.in);
         List<String> names = new ArrayList<>(number);
-        String typeName = getTypeName(fileType);
+        String typeName = fileType.getTitleName();
         for (int i = 1; i <= number; i++) {
             System.out.print(typeName + " " + i + ": ");
             names.add(sc.nextLine());
         }
         return names;
-    }
-
-    private String getTypeName(FileTypeEnum fileType) {
-        if (fileType.equals(FileTypeEnum.File)) {
-            return "filename";
-        }
-        // FileTypeEnum.Directory
-        return "dirname";
     }
 
     public List<String> generateDefaultNames(int number) {
