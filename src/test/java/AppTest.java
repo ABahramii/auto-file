@@ -19,6 +19,7 @@ class AppTest {
         app = new App();
         sysInBackup = System.in;
         sysOutBackup = System.out;
+        Files.deleteIfExists(Paths.get("src/test/resources/tmp.tmp"));
         tmpOutput = Files.createFile(Paths.get("src/test/resources/tmp.tmp"));
     }
 
@@ -26,7 +27,6 @@ class AppTest {
     void afterTestsRuns() throws IOException {
         System.setIn(sysInBackup);
         System.setOut(sysOutBackup);
-        Files.delete(tmpOutput);
     }
 
     @Test
