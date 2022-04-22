@@ -15,16 +15,12 @@ public class FileCreator {
         this.fileNames = fileNames;
     }
 
-    public void create() {
-        try {
-            if (fileType.equals(FileTypeEnum.File)) {
-                createFile();
-            } else {
-                // FileTypeEnum.Directory
-                createDirectory();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void create() throws IOException {
+        if (fileType.equals(FileTypeEnum.File)) {
+            createFile();
+        } else {
+            // FileTypeEnum.Directory
+            createDirectory();
         }
     }
 

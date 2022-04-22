@@ -1,4 +1,6 @@
+import java.security.spec.RSAOtherPrimeInfo;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -15,6 +17,14 @@ public class App {
             names = generateDefaultNames(flag.getNumber());
         }
 
+        FileCreator fileCreator = new FileCreator(flag.getFileType(), flag.getPath(), names);
+        fileCreator.create();
+
+        if (flag.getFileType().equals(FileTypeEnum.File)) {
+            System.out.println("\nFiles created successfully.");
+        } else {
+            System.out.println("\nDirectories created successfully.");
+        }
     }
 
     public List<String> getCustomNames(FileTypeEnum fileType, int number) {
