@@ -1,9 +1,6 @@
-import java.security.spec.RSAOtherPrimeInfo;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class App {
@@ -37,6 +34,6 @@ public class App {
     public List<String> generateDefaultNames(int number) {
         return IntStream.range(1, number + 1)
                 .mapToObj(String::valueOf)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

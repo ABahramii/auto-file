@@ -24,7 +24,7 @@ class AppTest {
     }
 
     @AfterAll
-    void afterTestsRuns() throws IOException {
+    void afterTestsRuns() {
         System.setIn(sysInBackup);
         System.setOut(sysOutBackup);
     }

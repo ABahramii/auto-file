@@ -5,9 +5,9 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class FileCreator {
-    private FileTypeEnum fileType;
-    private String rootPath;
-    private List<String> fileNames;
+    private final FileTypeEnum fileType;
+    private final String rootPath;
+    private final List<String> fileNames;
 
     public FileCreator(FileTypeEnum fileType, String path, List<String> fileNames) {
         this.fileType = fileType;
